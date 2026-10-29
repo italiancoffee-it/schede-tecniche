@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Catalogo prodotti Italian Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===================== VARIABILI ===================== */
+:root{
+  --rosso:#d90a16; --rosso-scuro:#b8080f; --rosso-tenue:#fdeced; --riga-selezionata:#fdf4f4; --rosso-parziale:#f0a0a5;
+  --testo:#222224; --testo-codici:#3c3c40; --testo-menu:#4a4a4e;
+  --grigio:#6f7074; --grigio-chiaro:#8a8b8f; --grigio-intestazioni:#7a7b80;
+  --bordo-campi:#e2e2e4; --bordo-tabella:#e6e6e8; --linea:#ececee; --linea-riga:#f1f1f2;
+  --sfondo-chiaro:#fafafa; --hover:#f5f5f6; --hover-contatti:#f8f8f8; --casella:#c8c8cb; --vuoto:#b5b5b8; --pagina:#f4f4f5;
+  --font:'Figtree',system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --larghezza-menu:264px; --altezza-riga:72px;
+  --colonne:52px 68px minmax(150px,1fr) minmax(130px,1fr) minmax(150px,1fr) minmax(100px,1fr) minmax(120px,1fr) minmax(130px,1fr) minmax(130px,1fr) minmax(130px,1fr) 236px 44px;
+}
+body.compatta{--altezza-riga:56px}
+
+/* ===================== BASE ===================== */
+body{margin:0;background:var(--pagina);font-family:var(--font);color:var(--testo);-webkit-font-smoothing:antialiased}
+a{color:var(--rosso)} a:hover{color:var(--rosso)}
+button{font-family:var(--font);color:inherit}
+[hidden]{display:none!important}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* ===================== LAYOUT ===================== */
+.app{display:grid;grid-template-columns:var(--larghezza-menu) minmax(0,1fr);min-height:100vh;background:#fff}
+.menu{border-right:1px solid var(--linea);display:flex;flex-direction:column;padding:24px 16px;gap:24px;position:sticky;top:0;height:100vh;box-sizing:border-box;overflow-y:auto}
+main{display:flex;flex-direction:column;min-width:0}
+
+/* Menu sistemi */
+.sistemi{display:flex;flex-direction:column;gap:2px}
+.sistema{display:flex;align-items:center;gap:12px;width:100%;padding:7px 12px;border:none;border-radius:6px;background:transparent;cursor:pointer;font:400 15px/normal var(--font);color:var(--testo-menu);text-align:left}
+.sistema:hover{background:var(--hover)}
+.sistema.attivo{background:var(--rosso-tenue);color:var(--rosso);font-weight:600;box-shadow:inset 3px 0 0 var(--rosso)}
+.punto{width:6px;height:6px;border-radius:50%;flex:none;background:var(--casella)}
+.attivo .punto{background:var(--rosso)}
+.sistema .nome-s{flex:1}
+.conteggio{font-size:12px;color:var(--grigio-chiaro);font-weight:500}
+
+/* Contatti */
+.contatti{margin-top:auto;padding:16px 4px 0;border-top:1px solid var(--linea);display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grigio-chiaro)}
+.contatti .eyebrow{padding:0 8px 4px}
+.contatto{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--bordo-campi);border-radius:8px;text-decoration:none;color:var(--testo)}
+.contatto:hover{border-color:var(--rosso);background:var(--hover-contatti);color:var(--testo)}
+.contatto svg{flex:none}
+.contatto .t{display:flex;flex-direction:column;gap:1px;min-width:0}
+.contatto b{font-size:13px;font-weight:600}
+.contatto small{font-size:12px;color:var(--grigio);overflow:hidden;text-overflow:ellipsis}
+
+/* Testata */
+.testata{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:24px 28px;background:var(--sfondo-chiaro);border-bottom:1px solid var(--linea)}
+.brand{display:flex;align-items:center;gap:20px;min-width:0}
+.brand .logo{height:64px;width:116px;flex:none;display:block}
+.titoli{display:flex;flex-direction:column;gap:6px;min-width:0}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.01em}
+.disclaimer{font-size:12px;color:var(--grigio-chiaro)}
+
+/* Pulsanti */
+.btn{display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid var(--bordo-campi);background:#fff;border-radius:6px;font:500 14px var(--font);color:var(--testo);cursor:pointer}
+.btn:hover{border-color:var(--rosso)}
+.btn.rosso{color:var(--rosso)}
+.btn.primario{border:none;background:var(--rosso);color:#fff}
+.btn.primario:hover{background:var(--rosso-scuro)}
+.btn .lbl-c{display:none}
+.btn-sm{height:34px;padding:0 12px;border:1px solid var(--bordo-campi);background:#fff;border-radius:6px;font:500 13px var(--font);color:var(--rosso);cursor:pointer;white-space:nowrap}
+.btn-sm:hover{border-color:var(--rosso)}
+.btn-sm:disabled{color:var(--vuoto);border-color:var(--linea);cursor:not-allowed}
+
+/* Filtri */
+.contenuto{padding:24px 28px;display:flex;flex-direction:column;gap:20px}
+.filtri{display:flex;gap:12px;flex-wrap:wrap}
+.ricerca{flex:1 1 420px;display:flex;align-items:center;gap:12px;height:52px;padding:0 16px;border:1px solid var(--bordo-campi);border-radius:8px}
+.ricerca input{flex:1;min-width:0;border:none;outline:none;font:400 16px var(--font);color:var(--testo);background:transparent}
+.ms{position:relative;flex:0 1 230px;min-width:190px}
+.ms-btn{width:100%;height:52px;padding:0 14px;border:1px solid var(--bordo-campi);background:#fff;border-radius:8px;display:flex;align-items:center;gap:8px;cursor:pointer;font:400 15px var(--font);color:var(--testo);text-align:left}
+.ms.aperto .ms-btn{border-color:var(--rosso)}
+.ms-btn .lab{color:var(--grigio)}
+.ms-btn .val{flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ms-pan{position:absolute;top:58px;left:0;right:0;z-index:20;background:#fff;border:1px solid var(--bordo-tabella);border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.10);padding:6px;display:none;flex-direction:column;gap:2px}
+.ms.aperto .ms-pan{display:flex}
+.ms-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border:none;border-radius:6px;background:none;cursor:pointer;font:400 14px var(--font);text-align:left}
+.ms-opt:hover{background:var(--hover)}
+.ms-azzera{border:none;border-top:1px solid var(--linea-riga);margin-top:4px;padding:9px 10px 5px;background:none;font:400 13px var(--font);color:var(--rosso);cursor:pointer;text-align:left}
+
+/* Caselle */
+.cb{box-sizing:content-box;position:relative;width:18px;height:18px;padding:0;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--casella);background:#fff;color:#fff;font-size:12px;line-height:1;flex:none}
+.cb.on{border-color:var(--rosso);background:var(--rosso)}
+.cb.parz{border-color:var(--rosso);background:var(--rosso-parziale)}
+.ms-opt .cb{width:16px;height:16px;font-size:11px;pointer-events:none}
+
+/* Barra prodotti */
+.barra{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:44px}
+.barra .tit{display:flex;align-items:baseline;gap:10px}
+.barra h2{margin:0;font-size:19px;font-weight:600}
+.risultati{font-size:14px;color:var(--grigio)}
+.massivi{display:flex;gap:10px;flex-wrap:wrap;opacity:.55}
+body.con-selezione .massivi{opacity:1}
+.sel-tutti-m{display:none}
+
+/* Tabella */
+.tabella{border:1px solid var(--bordo-tabella);border-radius:8px;overflow-x:auto}
+.tabella-inner{min-width:1520px}
+.intest{display:grid;grid-template-columns:var(--colonne);align-items:center;height:46px;border-bottom:1px solid var(--bordo-tabella);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--grigio-intestazioni);background:var(--sfondo-chiaro)}
+.intest>div{padding:0 12px;white-space:nowrap}
+.intest .h-cb{display:flex;justify-content:center;padding:0}
+.intest .h-foto{padding:0 10px}
+.intest .h-dl{padding:0 16px;text-align:right}
+.riga{border-bottom:1px solid var(--linea-riga);background:#fff}
+.riga.sel{background:var(--riga-selezionata)}
+.riga-grid{display:grid;grid-template-columns:var(--colonne);align-items:center;min-height:var(--altezza-riga);font-size:14px}
+.c-head,.c-facts,.c-id{display:contents}
+.c-cb{display:flex;justify-content:center}
+.c-foto{padding:0 10px}
+.foto{position:relative;width:44px;height:44px;border-radius:6px;border:1px solid var(--linea);background:repeating-linear-gradient(135deg,#f5f5f6 0 5px,#eeeeef 5px 10px);display:flex;align-items:center;justify-content:center;font:500 8px var(--mono);color:var(--grigio-chiaro);overflow:hidden}
+.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.c-sku,.c-nome{padding:8px 12px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.sku{font:500 13px var(--mono);color:var(--testo)}
+.nome{font-size:14px;font-weight:600;color:var(--testo)}
+.categoria{font-size:12px;color:var(--grigio-chiaro)}
+.rev{align-self:flex-start;font-size:11px;color:var(--grigio);border:1px solid var(--bordo-tabella);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.c{padding:0 12px;color:var(--testo)}
+.c.dop{display:flex;flex-direction:column;gap:3px}
+.c .sub{font-size:12px;color:var(--grigio-chiaro)}
+.c.codice{font:400 13px var(--mono);color:var(--testo-codici)}
+.c.codice.vuoto{color:var(--vuoto)}
+.c.logi{display:flex;flex-direction:column;gap:3px;font-size:13px}
+.c-azioni{padding:0 16px;display:flex;gap:8px;justify-content:flex-end}
+.c-exp{display:flex;justify-content:center}
+.exp{width:30px;height:30px;padding:0;border:none;background:transparent;border-radius:6px;cursor:pointer;color:var(--grigio);display:flex;align-items:center;justify-content:center;gap:6px}
+.exp:hover{background:var(--linea-riga)}
+.exp svg{transition:transform .15s}
+.riga.aperta .exp svg{transform:rotate(180deg)}
+.exp .lab-m{display:none}
+
+/* Dettaglio */
+.dett{padding:4px 28px 24px 120px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;font-size:13px}
+.dcol{display:flex;flex-direction:column;gap:10px}
+.dcol.s2{grid-column:span 2}
+.pack-wrap{overflow-x:auto}
+.dett.con-profilo{grid-template-columns:repeat(4,minmax(0,1fr))}
+.profilo{display:flex;flex-direction:column;gap:8px}
+.profilo .k{color:var(--grigio)}
+.profilo .riga-k{display:flex;justify-content:space-between;gap:8px}
+.profilo .forte{font-weight:600}
+.profilo .sep{border-top:1px solid var(--linea-riga);padding-top:8px}
+.barre{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.barre i{height:6px;border-radius:1px;background:var(--linea)}
+.barre i.on{background:var(--rosso)}
+.pack{display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr));border:1px solid var(--linea);border-radius:6px;overflow:hidden}
+.pack>div{padding:8px 10px;border-top:1px solid var(--linea-riga)}
+.pack .th{background:var(--sfondo-chiaro);font-weight:600;border-top:none}
+.pack .k{color:var(--grigio)}
+.mat{color:var(--grigio);line-height:1.5}
+.cons{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--linea-riga);padding-bottom:8px}
+.cons .k{color:var(--grigio)}
+.cons .v{line-height:1.45}
+
+/* Stati */
+.stato-vuoto{padding:56px 20px;text-align:center;color:var(--grigio);font-size:15px}
+.sk{display:block;height:10px;border-radius:4px;background:linear-gradient(90deg,#f1f1f2 0%,#f8f8f8 50%,#f1f1f2 100%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+.riga.scheletro .foto{background:#f1f1f2}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:50;max-width:calc(100vw - 32px);box-sizing:border-box;background:var(--testo);color:#fff;padding:12px 18px;border-radius:8px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);animation:toastIn .2s ease-out}
+
+/* Elementi solo mobile */
+.sistemi-m,.contatti-m{display:none}
+
+/* ===================== MOBILE (< 600 px) ===================== */
+@media (max-width:600px){
+  .app{display:block}
+  .menu{display:none}
+  .testata{flex-direction:column;align-items:stretch;gap:14px;padding:16px}
+  .brand{gap:14px}
+  .brand .logo{height:44px;width:80px}
+  h1{font-size:20px}
+  .disclaimer{font-size:11px;line-height:1.4}
+  .testata>.btn{width:100%;justify-content:center}
+  .sistemi-m{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:15;background:#fff;scrollbar-width:none}
+  .sistemi-m::-webkit-scrollbar{display:none}
+  .chip{flex:none;display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--bordo-campi);border-radius:18px;background:#fff;font:400 14px var(--font);color:var(--testo-menu);white-space:nowrap;cursor:pointer}
+  .chip.attivo{background:var(--rosso-tenue);border-color:var(--rosso);color:var(--rosso);font-weight:600}
+  .contenuto{padding:16px;gap:16px}
+  .ricerca{flex-basis:100%;height:48px;padding:0 14px}
+  .ms{flex:1 1 0;min-width:0}
+  .ms-btn{height:48px;font-size:14px;padding:0 12px}
+  .ms-pan{top:54px}
+  .sel-tutti-m{display:flex;align-items:center;gap:10px;padding:8px 0;border:none;background:none;font:500 14px var(--font);cursor:pointer}
+  .massivi{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;flex-wrap:nowrap;gap:8px;opacity:1;background:#fff;border-top:1px solid var(--linea);padding:12px 16px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(0,0,0,.06)}
+  body.con-selezione .massivi{display:flex}
+  .massivi .btn{flex:1;justify-content:center;height:44px;padding:0 10px}
+  .btn .lbl-l{display:none}
+  .btn .lbl-c{display:inline}
+  body.con-selezione .contenuto{padding-bottom:84px}
+  body.con-selezione .toast{bottom:88px}
+  .tabella{border:none;border-radius:0;overflow:visible}
+  .tabella-inner{min-width:0;display:flex;flex-direction:column;gap:12px}
+  .intest{display:none}
+  .riga{border:1px solid var(--bordo-tabella);border-radius:10px;overflow:hidden}
+  .riga-grid{display:flex;flex-direction:column;align-items:stretch;gap:14px;min-height:0;padding:14px}
+  .c-head{display:grid;grid-template-columns:auto 56px minmax(0,1fr);gap:12px;align-items:center}
+  .c-cb,.c-foto,.c-sku,.c-nome{padding:0}
+  .c-id{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .cb::after{content:"";position:absolute;inset:-12px}
+  .foto{width:56px;height:56px}
+  .c-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;padding-top:14px;border-top:1px solid var(--linea-riga)}
+  .c{padding:0;display:flex;flex-direction:column;gap:3px;min-width:0}
+  .c::before{content:attr(data-l);font:500 10px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--grigio-chiaro);margin-bottom:2px}
+  .c.codice{word-break:break-all}
+  .c-azioni{padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn-sm{height:44px}
+  .c-exp{display:block;margin:-6px 0 -4px}
+  .exp{width:100%;height:40px;font:500 13px var(--font)}
+  .exp .lab-m{display:inline}
+  .dett{padding:0 14px 18px;grid-template-columns:minmax(0,1fr);gap:22px}
+  .dett.con-profilo{grid-template-columns:minmax(0,1fr)}
+  .dcol.s2{grid-column:auto}
+  .pack{min-width:440px}
+  .contatti-m{display:flex;flex-direction:column;gap:8px;padding:24px 16px 32px;border-top:1px solid var(--linea)}
+  .contatti-m .eyebrow{padding:0 4px 4px}
+  .contatto{padding:12px 14px}
+  .toast{bottom:20px}
+}
+</style>
+</head>
+<body>
+<div class="app" id="root">
+  <aside class="menu">
+    <nav class="sistemi" id="sistemi" aria-label="Sistemi"></nav>
+    <div class="contatti" id="contatti"></div>
+  </aside>
+
+  <main>
+    <header class="testata">
+      <div class="brand">
+        <svg class="logo" role="img" aria-label="Italian Coffee" xmlns="http://www.w3.org/2000/svg" viewBox="123.8 -401.7 354.5 196.5"><path fill="#d90a16" d="M450.4 -322.6L450 -328.5C450 -329.3 450 -330.2 449.9 -331.3L449.8 -331.3C449.6 -330.4 449.3 -329.2 449 -328.3L447.2 -322.8L445.2 -322.8L443.4 -328.4C443.3 -329.2 443 -330.4 442.8 -331.3L442.6 -331.3C442.6 -330.4 442.6 -329.4 442.6 -328.5L442.2 -322.6L440.3 -322.6L441.1 -332.6L444 -332.6L445.7 -327.7C445.9 -326.9 446.1 -326.2 446.3 -325.2L446.4 -325.2C446.6 -326.1 446.8 -326.9 447.1 -327.7L448.8 -332.6L451.6 -332.6L452.3 -322.6ZM439.8 -332.6L439.8 -330.9L436.6 -330.9L436.6 -322.6L434.7 -322.6L434.7 -330.9L431.5 -330.9L431.5 -332.6Z"></path><path fill="#d90a16" d="M298.5 -392C309.7 -384.2 284.7 -401.7 298.5 -392"></path><path fill="#d90a16" d="M270.6 -283.2C268.7 -278.9 266.9 -274.5 265.4 -269.9C262.4 -260.7 260.6 -251.1 258.2 -241.7C256.7 -235.9 254.8 -227.2 246.3 -229.7C243.1 -230.7 239.8 -233.3 237 -235.2C230.2 -239.6 223.6 -244.3 217.1 -249.1C200.8 -261 185.6 -274.2 172.8 -290C164.7 -299.9 156.8 -310.9 153.9 -323.7C150.4 -339 158.9 -351 174.8 -345.8C191.2 -340.5 206.7 -323.9 214.2 -308.5C216.5 -304 217.4 -293.8 222.9 -292C229.8 -289.7 231.1 -298.5 232.1 -303.2C237.8 -328.9 242.4 -357.1 260.4 -377.2C268.4 -386.1 284.4 -392.8 290.6 -377.8C295.9 -365.2 295.8 -351.5 293.1 -338.2L298.9 -338.2C299.9 -340.7 301 -343.1 302 -345.5C307.6 -359.2 313.3 -381.7 298.5 -392C286.3 -400.6 269.8 -392.4 259.7 -384.2C244.7 -372.1 232.7 -352.8 231.2 -333.1C230.9 -329.5 231.1 -321.8 225.3 -324.5C218.6 -333.2 213.7 -341.8 204.5 -348.6C188.1 -360.7 166.4 -365.3 150.6 -349.3C123.8 -322 151.8 -283.1 174.8 -265.5C191.4 -252.8 208.2 -240 226.4 -229.6C232.3 -226.1 238.3 -222.9 244.4 -219.9C249.4 -217.6 257.7 -211.8 260.1 -220.2C261.2 -224.1 261.2 -228.5 261.6 -232.4C262.6 -240.7 264.6 -249.2 266.3 -257.4C268.2 -266.7 270.5 -274.9 273.9 -283.2Z"></path><path fill="#d90a16" d="M300.5 -238.3C297.6 -238.3 294.9 -238.8 292.5 -239.6C290 -240.5 287.9 -241.8 286.1 -243.6C284.4 -245.3 283 -247.5 282 -250.1C281.1 -252.7 280.6 -255.6 280.6 -259C280.6 -262.4 281 -265.3 282 -267.8C282.9 -270.3 284.3 -272.4 286.1 -274.3C287.9 -276.1 290 -277.4 292.4 -278.4C294.9 -279.3 297.6 -279.8 300.6 -279.8C302.1 -279.8 303.5 -279.7 304.8 -279.5C306.1 -279.3 307.3 -279 308.4 -278.7C309.4 -278.5 310.4 -278.1 311.4 -277.7C312.4 -277.3 313.4 -276.9 314.3 -276.4L314.3 -270L313.9 -270C313.3 -270.4 312.7 -270.9 311.9 -271.5C311 -272.1 310 -272.7 308.9 -273.3C307.7 -273.9 306.5 -274.4 305.2 -274.7C303.8 -275.1 302.3 -275.2 300.5 -275.2C298.6 -275.2 296.8 -274.9 295.1 -274.2C293.4 -273.5 292 -272.5 290.7 -271.1C289.4 -269.7 288.5 -268 287.8 -266C287.1 -263.9 286.7 -261.6 286.7 -259C286.7 -256.3 287.1 -253.9 287.8 -251.9C288.6 -249.9 289.6 -248.3 290.8 -246.9C292.1 -245.6 293.5 -244.6 295.2 -243.9C296.9 -243.2 298.6 -242.9 300.5 -242.9C302.2 -242.9 303.8 -243.1 305.3 -243.5C306.7 -243.8 308 -244.3 309.2 -244.9C310.3 -245.4 311.2 -246 312 -246.6C312.8 -247.2 313.4 -247.7 313.9 -248.1L314.3 -248.1L314.3 -241.8C313.4 -241.3 312.4 -240.9 311.6 -240.6C310.7 -240.2 309.6 -239.8 308.4 -239.5C307.1 -239.1 305.9 -238.8 304.8 -238.6C303.7 -238.4 302.3 -238.3 300.5 -238.3"></path><path fill="#d90a16" d="M341.7 -254C341.7 -257.9 340.9 -260.9 339.5 -262.8C338 -264.7 336 -265.7 333.3 -265.7C330.6 -265.7 328.5 -264.7 327 -262.8C325.6 -260.9 324.8 -257.9 324.8 -254C324.8 -250.2 325.6 -247.3 327 -245.3C328.5 -243.3 330.6 -242.3 333.3 -242.3C335.9 -242.3 338 -243.3 339.5 -245.3C340.9 -247.2 341.7 -250.1 341.7 -254M347 -254C347 -248.9 345.8 -244.9 343.3 -242.1C340.8 -239.3 337.4 -237.9 333.3 -237.9C329 -237.9 325.6 -239.4 323.2 -242.3C320.7 -245.1 319.5 -249.1 319.5 -254C319.5 -259.1 320.7 -263 323.3 -265.9C325.8 -268.7 329.1 -270.1 333.3 -270.1C337.4 -270.1 340.8 -268.7 343.3 -265.9C345.8 -263.1 347 -259.1 347 -254"></path><path fill="#d90a16" d="M371.8 -276.1L371.5 -276.1C371 -276.3 370.3 -276.4 369.4 -276.6C368.5 -276.8 367.7 -276.8 367 -276.8C364.7 -276.8 363.1 -276.3 362.1 -275.4C361.1 -274.4 360.6 -272.7 360.6 -270.1L360.6 -269.1L369.6 -269.1L369.6 -264.9L360.8 -264.9L360.8 -238.9L355.4 -238.9L355.4 -264.9L351.8 -264.9L351.8 -269.1L355.4 -269.1L355.4 -270.1C355.4 -273.8 356.4 -276.5 358.2 -278.4C360.1 -280.3 362.7 -281.3 366.2 -281.3C367.2 -281.3 368.2 -281.2 369.1 -281.1C370.1 -281 371 -280.9 371.8 -280.8Z"></path><path fill="#d90a16" d="M391.1 -276.1L390.8 -276.1C390.3 -276.3 389.6 -276.4 388.7 -276.6C387.8 -276.8 387 -276.8 386.3 -276.8C384 -276.8 382.4 -276.3 381.4 -275.4C380.4 -274.4 380 -272.7 380 -270.1L380 -269.1L388.9 -269.1L388.9 -264.9L380.1 -264.9L380.1 -238.9L374.7 -238.9L374.7 -264.9L371.1 -264.9L371.1 -269.1L374.7 -269.1L374.7 -270.1C374.7 -273.8 375.6 -276.5 377.5 -278.4C379.4 -280.3 382 -281.3 385.5 -281.3C386.5 -281.3 387.5 -281.2 388.4 -281.1C389.4 -281 390.3 -280.9 391.1 -280.8Z"></path><path fill="#d90a16" d="M413.6 -257.4C413.6 -258.8 413.4 -259.9 413.1 -260.9C412.8 -261.9 412.3 -262.7 411.8 -263.4C411.1 -264.1 410.3 -264.7 409.3 -265.1C408.3 -265.5 407.1 -265.7 405.6 -265.7C404.2 -265.7 402.9 -265.5 401.9 -265.1C400.9 -264.7 400 -264.1 399.2 -263.3C398.4 -262.5 397.8 -261.7 397.3 -260.7C396.9 -259.8 396.6 -258.7 396.5 -257.4ZM407.2 -238.4C402.1 -238.4 398.1 -239.8 395.3 -242.5C392.4 -245.2 391 -248.9 391 -253.9C391 -258.8 392.4 -262.6 395.1 -265.5C397.9 -268.4 401.5 -269.8 405.9 -269.8C407.9 -269.8 409.7 -269.6 411.3 -269C412.8 -268.5 414.2 -267.6 415.3 -266.5C416.5 -265.4 417.4 -264 418 -262.3C418.6 -260.7 418.9 -258.7 418.9 -256.3L418.9 -253.5L396.5 -253.5C396.5 -250.1 397.5 -247.4 399.4 -245.6C401.2 -243.7 403.9 -242.8 407.2 -242.8C408.4 -242.8 409.6 -242.9 410.7 -243.2C411.9 -243.4 412.9 -243.8 413.8 -244.2C414.8 -244.6 415.6 -245 416.3 -245.3C417 -245.7 417.5 -246.1 418 -246.4L418.3 -246.4L418.3 -240.9C417.6 -240.7 416.9 -240.4 415.9 -240.1C415 -239.7 414.1 -239.5 413.4 -239.3C412.3 -239 411.4 -238.8 410.5 -238.7C409.6 -238.5 408.6 -238.4 407.2 -238.4"></path><path fill="#d90a16" d="M446.8 -257.4C446.8 -258.8 446.6 -259.9 446.3 -260.9C446 -261.9 445.5 -262.7 445 -263.4C444.3 -264.1 443.5 -264.7 442.5 -265.1C441.5 -265.5 440.3 -265.7 438.8 -265.7C437.4 -265.7 436.1 -265.5 435.1 -265.1C434.1 -264.7 433.2 -264.1 432.4 -263.3C431.6 -262.5 430.9 -261.7 430.5 -260.7C430.1 -259.8 429.8 -258.7 429.7 -257.4ZM440.4 -238.4C435.3 -238.4 431.3 -239.8 428.5 -242.5C425.6 -245.2 424.2 -248.9 424.2 -253.9C424.2 -258.8 425.6 -262.6 428.3 -265.5C431.1 -268.4 434.7 -269.8 439.1 -269.8C441.1 -269.8 442.9 -269.6 444.5 -269C446 -268.5 447.4 -267.6 448.5 -266.5C449.7 -265.4 450.6 -264 451.2 -262.3C451.8 -260.7 452.1 -258.7 452.1 -256.3L452.1 -253.5L429.7 -253.5C429.7 -250.1 430.7 -247.4 432.6 -245.6C434.4 -243.7 437.1 -242.8 440.4 -242.8C441.6 -242.8 442.8 -242.9 443.9 -243.2C445.1 -243.4 446.1 -243.8 447 -244.2C448 -244.6 448.8 -245 449.5 -245.3C450.2 -245.7 450.7 -246.1 451.2 -246.4L451.5 -246.4L451.5 -240.9C450.9 -240.7 450.1 -240.4 449.1 -240.1C448.2 -239.7 447.3 -239.5 446.6 -239.3C445.5 -239 444.6 -238.8 443.7 -238.7C442.8 -238.5 441.8 -238.4 440.4 -238.4"></path><path fill="#d90a16" d="M274.2 -290.6L257.4 -290.6L257.4 -294.7L262.9 -294.7L262.9 -326.7L257.4 -326.7L257.4 -330.8L274.2 -330.8L274.2 -326.7L268.7 -326.7L268.7 -294.7L274.2 -294.7Z"></path><path fill="#d90a16" d="M291.8 -289.8C288.8 -289.8 286.5 -290.6 284.9 -292.2C283.2 -293.8 282.4 -296.3 282.4 -299.8L282.4 -316.6L278.7 -316.6L278.7 -320.9L282.4 -320.9L282.4 -329.6L287.8 -329.6L287.8 -320.9L297.9 -320.9L297.9 -316.6L287.8 -316.6L287.8 -302.1C287.8 -300.6 287.9 -299.4 287.9 -298.6C288 -297.7 288.2 -297 288.6 -296.2C288.9 -295.6 289.4 -295.1 290.2 -294.8C290.9 -294.5 291.9 -294.3 293.1 -294.3C294 -294.3 294.9 -294.4 295.7 -294.7C296.6 -294.9 297.2 -295.1 297.5 -295.3L297.9 -295.3L297.9 -290.7C296.8 -290.4 295.8 -290.2 294.7 -290.1C293.7 -289.9 292.7 -289.8 291.8 -289.8"></path><path fill="#d90a16" d="M322.6 -298.1L322.6 -306.4C321.3 -306.3 319.6 -306.1 317.6 -306C315.6 -305.8 313.9 -305.5 312.7 -305.2C311.2 -304.8 310 -304.1 309 -303.3C308 -302.4 307.5 -301.2 307.5 -299.7C307.5 -298 308.1 -296.7 309.1 -295.8C310.2 -294.9 311.8 -294.5 313.8 -294.5C315.6 -294.5 317.2 -294.8 318.6 -295.5C320 -296.2 321.4 -297 322.6 -298.1M322.6 -293.8C322.2 -293.5 321.6 -293.1 320.8 -292.6C320 -292 319.3 -291.6 318.6 -291.3C317.6 -290.8 316.6 -290.4 315.7 -290.2C314.8 -289.9 313.5 -289.8 311.8 -289.8C310.5 -289.8 309.2 -290 307.9 -290.5C306.7 -291 305.6 -291.6 304.7 -292.5C303.8 -293.3 303.1 -294.3 302.6 -295.5C302 -296.7 301.8 -298 301.8 -299.4C301.8 -301.4 302.3 -303.2 303.2 -304.7C304.2 -306.2 305.7 -307.3 307.8 -308.2C309.7 -309 311.9 -309.5 314.4 -309.8C316.9 -310.1 319.7 -310.3 322.6 -310.4L322.6 -311.4C322.6 -312.6 322.4 -313.6 322 -314.3C321.6 -315 321.1 -315.6 320.4 -316C319.6 -316.4 318.8 -316.7 317.8 -316.8C316.7 -316.9 315.7 -317 314.6 -317C313.3 -317 311.8 -316.8 310 -316.5C308.3 -316.1 306.5 -315.6 304.8 -314.9L304.5 -314.9L304.5 -320.1C305.5 -320.4 307 -320.7 308.9 -321C310.8 -321.3 312.7 -321.5 314.6 -321.5C316.9 -321.5 318.8 -321.3 320.4 -321C321.9 -320.7 323.3 -320.1 324.6 -319.2C325.8 -318.4 326.7 -317.3 327.3 -316C327.9 -314.7 328.2 -313.1 328.2 -311.2L328.2 -290.6L322.6 -290.6Z"></path><path fill="#d90a16" d="M385.6 -298.1L385.6 -306.4C384.3 -306.3 382.6 -306.1 380.6 -306C378.5 -305.8 376.9 -305.5 375.6 -305.2C374.2 -304.8 372.9 -304.1 372 -303.3C371 -302.4 370.5 -301.2 370.5 -299.7C370.5 -298 371.1 -296.7 372.1 -295.8C373.2 -294.9 374.8 -294.5 376.8 -294.5C378.6 -294.5 380.2 -294.8 381.6 -295.5C383 -296.2 384.4 -297 385.6 -298.1M385.6 -293.8C385.1 -293.5 384.5 -293.1 383.8 -292.6C383 -292 382.3 -291.6 381.6 -291.3C380.6 -290.8 379.6 -290.4 378.7 -290.2C377.8 -289.9 376.5 -289.8 374.8 -289.8C373.4 -289.8 372.2 -290 370.9 -290.5C369.7 -291 368.6 -291.6 367.7 -292.5C366.8 -293.3 366.1 -294.3 365.6 -295.5C365 -296.7 364.8 -298 364.8 -299.4C364.8 -301.4 365.2 -303.2 366.2 -304.7C367.2 -306.2 368.7 -307.3 370.8 -308.2C372.7 -309 374.9 -309.5 377.4 -309.8C379.9 -310.1 382.7 -310.3 385.6 -310.4L385.6 -311.4C385.6 -312.6 385.4 -313.6 385 -314.3C384.6 -315 384.1 -315.6 383.3 -316C382.6 -316.4 381.8 -316.7 380.7 -316.8C379.7 -316.9 378.6 -317 377.6 -317C376.3 -317 374.8 -316.8 373 -316.5C371.3 -316.1 369.5 -315.6 367.8 -314.9L367.4 -314.9L367.4 -320.1C368.5 -320.4 370 -320.7 371.9 -321C373.8 -321.3 375.7 -321.5 377.6 -321.5C379.9 -321.5 381.8 -321.3 383.3 -321C384.9 -320.7 386.3 -320.1 387.6 -319.2C388.8 -318.4 389.7 -317.3 390.3 -316C390.9 -314.7 391.1 -313.1 391.1 -311.2L391.1 -290.6L385.6 -290.6Z"></path><path fill="#d90a16" d="M342.8 -290.6L337.4 -290.6L337.4 -332.7L342.8 -332.7Z"></path><path fill="#d90a16" d="M357.9 -290.8L353 -290.8L353 -320.6L357.9 -320.6ZM358.3 -325.6L352.6 -325.6L352.6 -330.8L358.3 -330.8Z"></path><path fill="#d90a16" d="M426.5 -290.7L421 -290.7L421 -307.8C421 -309.2 421 -310.4 420.8 -311.6C420.7 -312.8 420.4 -313.8 420 -314.5C419.6 -315.2 418.9 -315.8 418.1 -316.2C417.3 -316.5 416.3 -316.7 414.9 -316.7C413.5 -316.7 412.1 -316.4 410.7 -315.7C409.2 -315 407.8 -314.2 406.4 -313.1L406.4 -290.7L401 -290.7L401 -320.7L406.4 -320.7L406.4 -317.4C408.1 -318.7 409.7 -319.7 411.3 -320.4C412.9 -321.2 414.5 -321.5 416.3 -321.5C419.5 -321.5 422 -320.6 423.8 -318.6C425.6 -316.7 426.5 -313.9 426.5 -310.2Z"></path><path fill="#8a8b8f" d="M322.9 -215.7C324.5 -215.6 325.3 -215.6 325.4 -215.6L325.5 -215.6C325.9 -215.6 326.1 -215.6 326.1 -215.4C326.1 -215.2 325.8 -215.1 325.2 -215.1L323.1 -215.1C322.7 -215.1 322.5 -215.1 322.4 -215C321.8 -214.2 320.9 -213 319.7 -211.4C318.6 -209.9 318.1 -209 318.1 -208.7C318.1 -208.5 318.2 -208.6 318.5 -208.8C318.6 -208.8 318.7 -208.7 318.7 -208.7C318.7 -208.6 318.6 -208.5 318.2 -208.3L317.6 -208C317.3 -207.7 316.9 -207.6 316.5 -207.6C316.1 -207.6 316 -207.7 316 -207.9C316 -208.3 316.6 -209.2 317.7 -210.8C318.8 -212.3 319.9 -213.8 321.1 -215.2C320 -214.9 319.1 -214.8 318.5 -214.8C318.4 -214.9 318.4 -214.9 318.4 -215C318.4 -215.1 318.5 -215.2 318.7 -215.4C318.9 -215.5 319.1 -215.6 319.3 -215.6C319.5 -215.6 319.9 -215.6 320.3 -215.6L321.5 -215.6C322.1 -216.3 323.3 -218 325.1 -220.7C325.9 -221.7 326.3 -222.6 326.3 -223.3C326.3 -224.5 325.4 -225 323.8 -225C322.5 -225 321 -224.7 319.3 -223.9C317.5 -223.2 315.9 -222.3 314.5 -221C313.5 -220.2 312.7 -219.3 312.1 -218.3C311.5 -217.3 311.2 -216.4 311.2 -215.6C311.2 -214.3 311.9 -213.7 313.4 -213.7C313.5 -213.7 313.6 -213.7 313.8 -213.8C314.8 -213.8 315.7 -214.4 316.5 -215.4C317.4 -216.4 317.8 -217.3 317.8 -218C317.8 -218 317.8 -218.1 317.8 -218.2C318.2 -218.1 318.4 -217.9 318.4 -217.4C318.4 -216.8 318 -216 317.1 -215.1C315.9 -213.8 314.5 -213.2 312.9 -213.2C312 -213.2 311.4 -213.4 310.9 -213.9C310.4 -214.3 310.1 -214.9 310.1 -215.8C310.1 -217.6 311.3 -219.5 313.6 -221.4C315.2 -222.7 316.9 -223.8 318.8 -224.4C320.6 -225.1 322.3 -225.5 323.6 -225.5C325 -225.5 326 -225.3 326.7 -224.9C327.3 -224.5 327.7 -223.9 327.7 -223.2C327.7 -222.5 327.4 -221.7 326.8 -220.8C326.4 -220.3 325.1 -218.5 322.9 -215.7"></path><path fill="#8a8b8f" d="M330.1 -216C329.5 -216 328.8 -215.3 327.8 -214.1C326.8 -212.8 326.3 -211.9 326.3 -211.3C326.3 -210.7 326.5 -210.4 326.9 -210.4C327.5 -210.4 328.4 -211 329.4 -212.2C330.5 -213.4 331 -214.3 331 -214.9C330.7 -215 330.4 -215.4 330.1 -216M331.6 -214.7C331.6 -214.2 331.1 -213.3 330 -211.9C328.8 -210.4 327.7 -209.7 326.8 -209.7L326.4 -209.7C326 -209.7 325.7 -209.9 325.4 -210.3C325.3 -210.6 325.2 -210.9 325.2 -211.3C325.2 -212.2 325.9 -213.6 327.2 -215.3C328.6 -217 329.7 -217.8 330.6 -217.8C331.4 -217.8 331.8 -217.4 331.8 -216.6C331.8 -216.3 331.8 -216.1 331.7 -215.7C331.7 -215.7 331.9 -215.7 332.1 -215.7C332.4 -215.7 332.9 -215.8 333.4 -216.1C333.4 -215.8 332.8 -215.4 331.6 -214.9C331.6 -214.9 331.6 -214.8 331.6 -214.7"></path><path fill="#8a8b8f" d="M336.9 -209.6C335.7 -209.6 335.1 -210.2 335.1 -211.6C335.1 -212.2 335.3 -212.9 335.6 -213.7C336 -214.5 336.4 -215.2 336.8 -215.7C336.7 -215.7 336.6 -215.7 336.5 -215.7C336.1 -215.7 335.8 -216 335.5 -216.5L333.8 -214.2C332.8 -213 332.2 -212.4 332.1 -212.4C332 -212.4 331.9 -212.4 331.9 -212.5C331.9 -212.7 332.1 -212.9 332.4 -213.2C333.7 -214.8 334.7 -216.1 335.3 -217.2C335.6 -218.6 336.1 -219.3 336.6 -219.3C337 -219.3 337.2 -219.1 337.2 -218.8C337.2 -218.5 337 -218.1 336.6 -217.6L336 -216.9C336 -216.5 336.3 -216.4 336.8 -216.4C337 -216.4 337.4 -216.5 337.7 -216.7L338.3 -217.1C338.4 -217.1 338.4 -217.1 338.6 -217.1C338.7 -217.1 338.8 -217 339 -216.8C339.1 -216.7 339.1 -216.5 339.1 -216.4L337.5 -214.3C336.5 -213.1 335.9 -212 335.9 -211.3C335.9 -210.5 336.3 -210.2 337 -210.2C337.7 -210.2 338.6 -210.5 339.7 -211.3C340.3 -211.8 340.9 -212.3 341.4 -212.8C341.9 -213.4 342.2 -213.7 342.2 -213.7C342.3 -213.7 342.4 -213.7 342.4 -213.5C342.4 -213.4 342.3 -213.3 342.2 -213.1L341.4 -212.3C341 -211.8 340.5 -211.4 340 -211C338.7 -210.1 337.7 -209.6 336.9 -209.6"></path><path fill="#8a8b8f" d="M355.6 -218.5C356.2 -218 357 -217.7 357.9 -217.7C358.8 -217.7 359.2 -217.9 359.2 -218.4C359.2 -218.6 358.8 -218.8 358 -218.8C357.3 -218.8 356.4 -218.7 355.6 -218.5M358 -219.3C359.6 -219.3 360.4 -219.1 360.4 -218.5C360.4 -218.3 360.3 -218.2 360.2 -218C359.9 -217.5 359.2 -217.2 358.2 -217.2C357.5 -217.2 356.9 -217.3 356.2 -217.5C355.5 -217.7 355 -218 354.6 -218.2C353.2 -217.8 351.9 -217.2 350.7 -216.3C349.6 -215.4 348.7 -214.4 348.1 -213.3C347.8 -212.7 347.7 -212.1 347.7 -211.5C347.7 -210.6 348.1 -209.9 348.8 -209.3C349.5 -208.8 350.6 -208.5 352 -208.5C352.4 -208.5 352.8 -208.5 353.3 -208.6C355.8 -208.8 357.8 -209.7 359.3 -211C360.5 -212.1 361.1 -213.3 361.1 -214.5C361.1 -215.4 360.7 -215.9 359.7 -215.9C358.6 -215.9 357.3 -215.3 355.9 -214.1C355.5 -213.8 355.2 -213.4 354.9 -213C354.7 -212.5 354.6 -212.1 354.6 -211.6C354.6 -211.2 354.8 -210.9 355.2 -210.8C355.4 -210.8 355.5 -210.7 355.5 -210.6C355.5 -210.4 355.3 -210.3 355 -210.4C354.2 -210.4 353.9 -210.9 353.9 -211.9C353.9 -212.9 354.4 -213.8 355.3 -214.6C356.7 -215.8 358.1 -216.4 359.7 -216.4C360.8 -216.4 361.5 -216 361.8 -215.3C361.9 -215 362 -214.7 362 -214.3C362 -212.8 361.2 -211.5 359.6 -210.2C357.6 -208.6 355.1 -207.8 352.2 -207.8C350.3 -207.8 348.9 -208.2 347.8 -208.8C346.7 -209.5 346.2 -210.4 346.2 -211.5C346.2 -212.2 346.4 -212.8 346.8 -213.5C348.2 -215.8 350.7 -217.5 354.2 -218.6C353.7 -219.2 353.4 -219.8 353.4 -220.5C353.4 -221.2 353.6 -221.8 353.9 -222.2C354.6 -223.1 355.6 -223.8 356.9 -224.4C358.4 -225.1 360 -225.4 361.5 -225.4C362.4 -225.4 363.1 -225.3 363.7 -225C364.2 -224.7 364.5 -224.3 364.5 -223.7C364.5 -223 364.3 -222.5 363.8 -222.1C363.4 -221.7 362.9 -221.5 362.4 -221.5C361.9 -221.5 361.7 -221.6 361.7 -221.8C361.7 -222 361.8 -222.1 362 -222.1L362.4 -222C362.8 -222 363.1 -222.2 363.3 -222.5C363.6 -222.8 363.7 -223.2 363.7 -223.5C363.7 -224.1 363.4 -224.5 362.8 -224.7C362.4 -224.9 362 -225 361.7 -225C361.3 -225 361.1 -225 360.9 -224.9C359.6 -224.9 358.3 -224.4 356.9 -223.5C355.4 -222.5 354.7 -221.4 354.7 -220.2C354.7 -219.7 354.8 -219.3 355.1 -218.9C356.2 -219.2 357.1 -219.3 358 -219.3"></path><path fill="#8a8b8f" d="M363.6 -212.7C363.6 -212.2 363.8 -211.7 364.2 -211.4C364.5 -211 364.9 -210.9 365.4 -210.9C365.8 -210.9 366.1 -210.9 366.4 -211.1C366.7 -211.3 367 -212 367.3 -213.3C367.6 -214.6 367.8 -215.7 367.9 -216.7L368 -217.5C367.1 -216.8 366.2 -216 365.2 -215C364.2 -214 363.7 -213.3 363.7 -212.9C363.6 -212.8 363.6 -212.8 363.6 -212.7M366.8 -210.1C366.4 -209.8 365.8 -209.7 365.1 -209.7C364.5 -209.7 364 -209.9 363.6 -210.3C363.3 -210.8 362.9 -211.5 362.7 -212.4C362.4 -212.1 362.2 -212 362.1 -212C362 -212 362 -212.1 362 -212.2C362 -212.3 362 -212.4 362.1 -212.4C362.6 -213.1 363.5 -214 364.8 -215.3L367.7 -218C368.6 -218.8 369.1 -219.3 369.3 -219.3C369.8 -219.3 370 -219.1 370 -218.7C370 -218.5 369.9 -218.3 369.8 -218.1C369.6 -217.9 369.5 -217.8 369.5 -217.7C369.4 -217.6 369.3 -217.5 369.2 -217.4C368.9 -216.9 368.7 -215.9 368.4 -214.4C368.1 -212.8 367.9 -211.8 367.7 -211.2C369 -211.2 370.4 -212 371.7 -213.7C371.9 -213.9 372 -214 372.1 -214C372.2 -214 372.2 -213.9 372.2 -213.8C372.2 -213.7 372.1 -213.6 372 -213.4C371.1 -212.3 370.2 -211.6 369.4 -211.2C369 -210.9 368.4 -210.7 367.6 -210.6Z"></path><path fill="#8a8b8f" d="M378.7 -215.3C378.7 -215.9 378.4 -216.2 377.6 -216.2C376.9 -216.2 376.3 -216 375.7 -215.7C375.4 -215.6 374.7 -214.9 373.5 -213.7C372.3 -212.4 371.6 -211.6 371.6 -211.2C371.6 -210.9 371.9 -210.7 372.3 -210.6C372.7 -210.4 373.2 -210.4 373.6 -210.4C374.5 -210.4 375.6 -210.9 376.8 -211.8C378.1 -212.8 378.7 -214 378.7 -215.3M379.9 -215.1C379.9 -213.8 379.2 -212.6 377.7 -211.4C376.3 -210.3 375 -209.7 373.9 -209.7C373.2 -209.7 372.7 -209.8 372.4 -209.8C372.1 -209.9 371.7 -210.2 371.3 -210.7C371 -210.5 370.7 -209.9 370.2 -209C369.8 -208.1 369.5 -207.3 369.5 -206.7C369.5 -206.4 369.7 -206 370 -205.5C370 -205.4 370 -205.3 369.9 -205.3C369.8 -205.2 369.8 -205.2 369.7 -205.2C369.7 -205.2 369.6 -205.2 369.6 -205.2C368.9 -205.6 368.6 -206.3 368.6 -207.3C368.6 -208.4 369.5 -210.2 371.2 -212.8C373 -215.4 374.2 -216.8 374.9 -217C375 -217 375.1 -217.1 375.2 -217.1C375.4 -217.1 375.6 -216.8 375.6 -216.2C375.7 -216.3 376 -216.5 376.5 -216.6C377.1 -216.8 377.6 -216.9 377.8 -216.9C378.4 -216.9 378.9 -216.7 379.3 -216.4C379.7 -216.1 379.9 -215.6 379.9 -215.1"></path><path fill="#8a8b8f" d="M384.8 -209.6C383.6 -209.6 383 -210.2 383 -211.6C383 -212.2 383.1 -212.9 383.5 -213.7C383.9 -214.5 384.2 -215.2 384.6 -215.7C384.6 -215.7 384.5 -215.7 384.3 -215.7C383.9 -215.7 383.6 -216 383.4 -216.5L381.6 -214.2C380.6 -213 380.1 -212.4 379.9 -212.4C379.8 -212.4 379.8 -212.4 379.8 -212.5C379.8 -212.7 379.9 -212.9 380.2 -213.2C381.6 -214.8 382.6 -216.1 383.1 -217.2C383.5 -218.6 383.9 -219.3 384.5 -219.3C384.9 -219.3 385 -219.1 385 -218.8C385 -218.5 384.9 -218.1 384.4 -217.6L383.9 -216.9C383.9 -216.5 384.1 -216.4 384.6 -216.4C384.9 -216.4 385.2 -216.5 385.6 -216.7L386.2 -217.1C386.2 -217.1 386.3 -217.1 386.4 -217.1C386.5 -217.1 386.7 -217 386.8 -216.8C387 -216.7 387 -216.5 387 -216.4L385.3 -214.3C384.3 -213.1 383.8 -212 383.8 -211.3C383.8 -210.5 384.2 -210.2 384.9 -210.2C385.6 -210.2 386.5 -210.5 387.5 -211.3C388.2 -211.8 388.7 -212.3 389.3 -212.8C389.8 -213.4 390 -213.7 390.1 -213.7C390.2 -213.7 390.2 -213.7 390.2 -213.5C390.2 -213.4 390.2 -213.3 390 -213.1L389.3 -212.3C388.8 -211.8 388.4 -211.4 387.8 -211C386.6 -210.1 385.6 -209.6 384.8 -209.6"></path><path fill="#8a8b8f" d="M394.9 -216.2C394.9 -216.4 394.8 -216.5 394.4 -216.5C393.9 -216.5 393.4 -216.2 392.6 -215.6C391.6 -214.8 390.9 -213.9 390.3 -213C390.4 -213 390.5 -212.9 390.6 -212.9C391.2 -212.9 392 -213.3 393 -213.9C394 -214.6 394.6 -215.3 394.9 -216C394.9 -216.1 394.9 -216.2 394.9 -216.2M390.5 -209.4C390.3 -209.4 390.1 -209.4 390 -209.5C389 -209.8 388.5 -210.3 388.5 -211.2C388.5 -212.3 389.2 -213.6 390.6 -215C392 -216.5 393.2 -217.2 394.3 -217.2C394.7 -217.2 395 -217.1 395.2 -216.9C395.4 -216.7 395.5 -216.5 395.5 -216.2C395.5 -215.3 394.9 -214.4 393.5 -213.6C392.2 -212.8 391.1 -212.4 390.3 -212.4C390.2 -212.4 390.1 -212.4 389.9 -212.5C389.7 -212.1 389.6 -211.6 389.6 -211.1C389.6 -210.3 390 -209.9 390.8 -209.9C391.6 -209.9 392.6 -210.4 393.8 -211.5C394.8 -212.3 395.6 -213.1 396.3 -213.9C396.4 -214.1 396.5 -214.2 396.6 -214.2C396.8 -214.2 396.8 -214.2 396.8 -214.1C396.8 -214 396.7 -213.9 396.6 -213.7C395.8 -212.6 394.7 -211.6 393.5 -210.7C392.3 -209.8 391.3 -209.4 390.5 -209.4"></path><path fill="#8a8b8f" d="M396.5 -212.7C396.5 -212.2 396.7 -211.7 397.1 -211.4C397.4 -211 397.8 -210.9 398.3 -210.9C398.7 -210.9 399 -210.9 399.3 -211.1C399.6 -211.3 399.9 -212 400.2 -213.3C400.5 -214.6 400.7 -215.7 400.8 -216.7L400.9 -217.5C400 -216.8 399.1 -216 398.1 -215C397.1 -214 396.6 -213.3 396.5 -212.9C396.5 -212.8 396.5 -212.8 396.5 -212.7M399.7 -210.1C399.3 -209.8 398.7 -209.7 398 -209.7C397.4 -209.7 396.8 -209.9 396.5 -210.3C396.1 -210.8 395.8 -211.5 395.6 -212.4C395.3 -212.1 395.1 -212 395 -212C394.9 -212 394.9 -212.1 394.9 -212.2C394.9 -212.3 394.9 -212.4 395 -212.4C395.5 -213.1 396.4 -214 397.6 -215.3L400.6 -218C401.5 -218.8 402 -219.3 402.1 -219.3C402.6 -219.3 402.9 -219.1 402.9 -218.7C402.9 -218.5 402.8 -218.3 402.7 -218.1C402.5 -217.9 402.4 -217.8 402.3 -217.7C402.3 -217.6 402.2 -217.5 402.1 -217.4C401.8 -216.9 401.5 -215.9 401.2 -214.4C400.9 -212.8 400.7 -211.8 400.6 -211.2C401.9 -211.2 403.2 -212 404.6 -213.7C404.8 -213.9 404.9 -214 405 -214C405.1 -214 405.1 -213.9 405.1 -213.8C405.1 -213.7 405 -213.6 404.9 -213.4C404 -212.3 403.1 -211.6 402.3 -211.2C401.9 -210.9 401.2 -210.7 400.5 -210.6Z"></path><path fill="#8a8b8f" d="M405 -212.7C405 -212.2 405.2 -211.7 405.6 -211.4C405.9 -211 406.3 -210.9 406.8 -210.9C407.2 -210.9 407.5 -210.9 407.8 -211.1C408.1 -211.3 408.4 -212 408.7 -213.3C409 -214.6 409.2 -215.7 409.3 -216.7L409.4 -217.5C408.5 -216.8 407.6 -216 406.6 -215C405.6 -214 405.1 -213.3 405.1 -212.9C405 -212.8 405 -212.8 405 -212.7M408.2 -210.1C407.8 -209.8 407.2 -209.7 406.5 -209.7C405.9 -209.7 405.4 -209.9 405 -210.3C404.6 -210.8 404.3 -211.5 404.1 -212.4C403.8 -212.1 403.6 -212 403.5 -212C403.4 -212 403.4 -212.1 403.4 -212.2C403.4 -212.3 403.4 -212.4 403.5 -212.4C404 -213.1 404.9 -214 406.1 -215.3L409.1 -218C410 -218.8 410.5 -219.3 410.6 -219.3C411.1 -219.3 411.4 -219.1 411.4 -218.7C411.4 -218.5 411.3 -218.3 411.2 -218.1C411 -217.9 410.9 -217.8 410.9 -217.7C410.8 -217.6 410.7 -217.5 410.6 -217.4C410.3 -216.9 410.1 -215.9 409.8 -214.4C409.5 -212.8 409.2 -211.8 409.1 -211.2C410.4 -211.2 411.7 -212 413.1 -213.7C413.3 -213.9 413.4 -214 413.5 -214C413.6 -214 413.6 -213.9 413.6 -213.8C413.6 -213.7 413.5 -213.6 413.4 -213.4C412.5 -212.3 411.6 -211.6 410.8 -211.2C410.4 -210.9 409.7 -210.7 409 -210.6Z"></path><path fill="#8a8b8f" d="M417 -216C416.5 -216 415.7 -215.3 414.7 -214.1C413.8 -212.8 413.3 -211.9 413.3 -211.3C413.3 -210.7 413.4 -210.4 413.8 -210.4C414.5 -210.4 415.4 -211 416.4 -212.2C417.4 -213.4 418 -214.3 418 -214.9C417.7 -215 417.4 -215.4 417 -216M418.6 -214.7C418.6 -214.2 418 -213.3 417 -211.9C415.7 -210.4 414.7 -209.7 413.8 -209.7L413.4 -209.7C413 -209.7 412.7 -209.9 412.4 -210.3C412.2 -210.6 412.1 -210.9 412.1 -211.3C412.1 -212.2 412.8 -213.6 414.2 -215.3C415.6 -217 416.7 -217.8 417.6 -217.8C418.4 -217.8 418.8 -217.4 418.8 -216.6C418.8 -216.3 418.7 -216.1 418.7 -215.7C418.7 -215.7 418.8 -215.7 419.1 -215.7C419.4 -215.7 419.8 -215.8 420.4 -216.1C420.4 -215.8 419.8 -215.4 418.5 -214.9C418.6 -214.9 418.6 -214.8 418.6 -214.7"></path><path fill="#8a8b8f" d="M442 -225.4C441.2 -225.4 440.2 -224.7 439 -223.4C438.2 -222.5 437.3 -221.2 436.2 -219.6C435.1 -218.1 434.1 -216.7 433.3 -215.6C433.5 -215.6 433.7 -215.5 434 -215.5C435.1 -215.5 436.3 -215.9 437.8 -216.7C439.2 -217.4 440.3 -218.4 441.1 -219.5C442.6 -221.5 443.3 -223.1 443.3 -224.1C443.3 -224.7 443 -225.2 442.5 -225.3C442.3 -225.4 442.2 -225.4 442 -225.4M428.5 -211.2C428.1 -211.8 427.7 -212.4 427.3 -213.2C426.9 -214.1 426.6 -214.5 426.5 -214.7C426.4 -214.9 426.3 -214.9 426.2 -214.9L426.1 -214.9C425.9 -214.9 425.6 -214.4 425.2 -213.4C424.9 -212.5 424.7 -211.5 424.7 -210.6C424.7 -209.7 425 -209.2 425.6 -209.2C426 -209.2 426.5 -209.4 427.1 -209.8C427.6 -210.3 428.1 -210.7 428.5 -211.2M444.1 -223.7C444.1 -222.5 443.5 -221 442.3 -219.3C441.3 -218 440.1 -216.9 438.5 -216.1C436.9 -215.3 435.5 -214.9 434.1 -214.9C433.6 -214.9 433.2 -215 432.9 -215.1C432.2 -214.2 431.2 -212.9 429.7 -211.1C430.3 -210.3 431.3 -209.5 432.7 -208.8C434.1 -208.2 435.4 -207.8 436.4 -207.8C437.5 -207.8 438.3 -207.9 438.8 -208.2C439.4 -208.6 439.8 -209.1 439.8 -209.8C439.8 -210 439.8 -210.1 439.8 -210.3C439.7 -210.4 439.8 -210.5 439.9 -210.5C440 -210.5 440.2 -210.4 440.3 -210.2C440.4 -210 440.4 -209.8 440.4 -209.6C440.4 -209 440.1 -208.5 439.5 -208C438.8 -207.4 437.8 -207.1 436.5 -207.1C435.2 -207.1 433.9 -207.4 432.5 -208C431.1 -208.6 430 -209.4 429.1 -210.5C427.9 -209.2 426.7 -208.6 425.5 -208.6C425.2 -208.6 424.9 -208.6 424.6 -208.8C424.1 -209.1 423.8 -209.7 423.8 -210.6C423.8 -211.4 424.2 -212.5 424.9 -213.8C425.6 -215.1 426.2 -215.8 426.6 -215.9C426.9 -215.9 427.3 -215.6 427.6 -214.9L429.1 -212C429.9 -213.1 430.8 -214.3 431.7 -215.7C430.4 -216.2 429.8 -217.1 429.8 -218.2C429.8 -219.1 430.2 -219.8 430.9 -220.4C431.3 -220.7 431.8 -220.9 432.2 -220.9C432.7 -220.9 433 -220.6 433.3 -220.1C433.3 -220 433.3 -220 433.3 -219.9C433.3 -219.9 433.2 -219.9 433.2 -219.9C432.9 -220.3 432.6 -220.4 432.2 -220.4L432.1 -220.4C431.7 -220.4 431.3 -220.2 430.9 -219.7C430.6 -219.2 430.4 -218.7 430.4 -218.3L430.4 -218.2C430.4 -217.4 431 -216.7 432.1 -216.1C432.3 -216.3 432.6 -216.8 433.1 -217.4C433.5 -218 433.8 -218.5 434 -218.9C437.2 -223.5 439.8 -225.8 441.9 -225.8C443.4 -225.8 444.1 -225.1 444.1 -223.7"></path><path fill="#8a8b8f" d="M444 -216C443.4 -216 442.7 -215.3 441.7 -214.1C440.7 -212.8 440.2 -211.9 440.2 -211.3C440.2 -210.7 440.4 -210.4 440.8 -210.4C441.4 -210.4 442.3 -211 443.4 -212.2C444.4 -213.4 444.9 -214.3 444.9 -214.9C444.7 -215 444.4 -215.4 444 -216M445.5 -214.7C445.5 -214.2 445 -213.3 443.9 -211.9C442.7 -210.4 441.6 -209.7 440.7 -209.7L440.4 -209.7C439.9 -209.7 439.6 -209.9 439.4 -210.3C439.2 -210.6 439.1 -210.9 439.1 -211.3C439.1 -212.2 439.8 -213.6 441.2 -215.3C442.6 -217 443.7 -217.8 444.5 -217.8C445.3 -217.8 445.7 -217.4 445.7 -216.6C445.7 -216.3 445.7 -216.1 445.6 -215.7C445.6 -215.7 445.8 -215.7 446.1 -215.7C446.3 -215.7 446.8 -215.8 447.4 -216.1C447.4 -215.8 446.7 -215.4 445.5 -214.9C445.5 -214.9 445.5 -214.8 445.5 -214.7"></path><path fill="#8a8b8f" d="M452.4 -219C452.9 -219 453.3 -218.9 453.6 -218.5C454 -218.2 454.1 -217.8 454.1 -217.2C454.1 -216 453.1 -214.4 451 -212.5C449.3 -210.9 447.9 -210 446.8 -209.6C446.6 -209.6 446.4 -209.7 446.1 -209.9C445.8 -210.1 445.7 -210.3 445.7 -210.4C445.7 -210.8 446.1 -212 446.8 -214C447.6 -216 448.1 -217.1 448.4 -217.3C448.4 -217.4 448.6 -217.4 448.7 -217.4C448.8 -217.4 449 -217.3 449.1 -217.2C449.3 -217.1 449.4 -216.9 449.4 -216.7C449.4 -216.7 449 -215.7 448.2 -213.9C447.4 -212.1 447.1 -211 447.1 -210.7C447.8 -210.9 449 -211.7 450.8 -213.2C452.5 -214.6 453.4 -215.9 453.4 -217.1C453.4 -217.8 453 -218.3 452.3 -218.6C452.2 -218.6 452.2 -218.7 452.2 -218.8C452.2 -218.9 452.3 -219 452.4 -219"></path><path fill="#8a8b8f" d="M458.8 -216.2C458.8 -216.4 458.6 -216.5 458.2 -216.5C457.8 -216.5 457.2 -216.2 456.5 -215.6C455.5 -214.8 454.7 -213.9 454.2 -213C454.3 -213 454.4 -212.9 454.5 -212.9C455.1 -212.9 455.9 -213.3 456.9 -213.9C457.9 -214.6 458.5 -215.3 458.8 -216C458.8 -216.1 458.8 -216.2 458.8 -216.2M454.3 -209.4C454.2 -209.4 454 -209.4 453.9 -209.5C452.9 -209.8 452.3 -210.3 452.3 -211.2C452.3 -212.3 453 -213.6 454.4 -215C455.8 -216.5 457.1 -217.2 458.2 -217.2C458.5 -217.2 458.8 -217.1 459.1 -216.9C459.3 -216.7 459.4 -216.5 459.4 -216.2C459.4 -215.3 458.7 -214.4 457.4 -213.6C456.1 -212.8 455 -212.4 454.1 -212.4C454 -212.4 453.9 -212.4 453.8 -212.5C453.6 -212.1 453.4 -211.6 453.4 -211.1C453.4 -210.3 453.8 -209.9 454.6 -209.9C455.4 -209.9 456.4 -210.4 457.7 -211.5C458.6 -212.3 459.5 -213.1 460.1 -213.9C460.3 -214.1 460.4 -214.2 460.5 -214.2C460.6 -214.2 460.7 -214.2 460.7 -214.1C460.7 -214 460.6 -213.9 460.5 -213.7C459.6 -212.6 458.6 -211.6 457.4 -210.7C456.2 -209.8 455.2 -209.4 454.3 -209.4"></path><path fill="#8a8b8f" d="M464.1 -209.6C462.9 -209.6 462.3 -210.2 462.3 -211.6C462.3 -212.2 462.4 -212.9 462.8 -213.7C463.1 -214.5 463.5 -215.2 463.9 -215.7C463.9 -215.7 463.8 -215.7 463.6 -215.7C463.2 -215.7 462.9 -216 462.7 -216.5L460.9 -214.2C459.9 -213 459.4 -212.4 459.2 -212.4C459.1 -212.4 459.1 -212.4 459.1 -212.5C459.1 -212.7 459.2 -212.9 459.5 -213.2C460.9 -214.8 461.8 -216.1 462.4 -217.2C462.8 -218.6 463.2 -219.3 463.8 -219.3C464.1 -219.3 464.3 -219.1 464.3 -218.8C464.3 -218.5 464.1 -218.1 463.7 -217.6L463.2 -216.9C463.2 -216.5 463.4 -216.4 463.9 -216.4C464.2 -216.4 464.5 -216.5 464.9 -216.7L465.5 -217.1C465.5 -217.1 465.6 -217.1 465.7 -217.1C465.8 -217.1 466 -217 466.1 -216.8C466.3 -216.7 466.3 -216.5 466.3 -216.4L464.6 -214.3C463.6 -213.1 463.1 -212 463.1 -211.3C463.1 -210.5 463.4 -210.2 464.1 -210.2C464.9 -210.2 465.8 -210.5 466.8 -211.3C467.4 -211.8 468 -212.3 468.6 -212.8C469 -213.4 469.3 -213.7 469.4 -213.7C469.5 -213.7 469.5 -213.7 469.5 -213.5C469.5 -213.4 469.4 -213.3 469.3 -213.1L468.6 -212.3C468.1 -211.8 467.6 -211.4 467.1 -211C465.9 -210.1 464.9 -209.6 464.1 -209.6"></path><path fill="#8a8b8f" d="M469.7 -212.7C469.7 -212.2 469.9 -211.7 470.3 -211.4C470.6 -211 471 -210.9 471.4 -210.9C471.9 -210.9 472.2 -210.9 472.5 -211.1C472.8 -211.3 473.1 -212 473.4 -213.3C473.7 -214.6 473.9 -215.7 474 -216.7L474.1 -217.5C473.2 -216.8 472.3 -216 471.3 -215C470.3 -214 469.8 -213.3 469.7 -212.9C469.7 -212.8 469.7 -212.8 469.7 -212.7M472.9 -210.1C472.5 -209.8 471.9 -209.7 471.2 -209.7C470.6 -209.7 470 -209.9 469.7 -210.3C469.3 -210.8 469 -211.5 468.8 -212.4C468.5 -212.1 468.3 -212 468.2 -212C468.1 -212 468.1 -212.1 468.1 -212.2C468.1 -212.3 468.1 -212.4 468.2 -212.4C468.7 -213.1 469.6 -214 470.8 -215.3L473.8 -218C474.7 -218.8 475.2 -219.3 475.3 -219.3C475.8 -219.3 476.1 -219.1 476.1 -218.7C476.1 -218.5 476 -218.3 475.9 -218.1C475.7 -217.9 475.6 -217.8 475.5 -217.7C475.5 -217.6 475.4 -217.5 475.3 -217.4C475 -216.9 474.7 -215.9 474.4 -214.4C474.1 -212.8 473.9 -211.8 473.8 -211.2C475.1 -211.2 476.4 -212 477.8 -213.7C478 -213.9 478.1 -214 478.2 -214C478.3 -214 478.3 -213.9 478.3 -213.8C478.3 -213.7 478.2 -213.6 478.1 -213.4C477.2 -212.3 476.3 -211.6 475.5 -211.2C475.1 -210.9 474.4 -210.7 473.7 -210.6Z"></path></svg>
+        <div class="titoli">
+          <h1 id="titolo"></h1>
+          <div class="disclaimer" id="disclaimer"></div>
+        </div>
+      </div>
+      <button class="btn rosso" data-act="tutto">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11"/></svg>
+        <span id="lbl-tutto">Scarica tutto il catalogo</span>
+      </button>
+    </header>
+
+    <nav class="sistemi-m" id="sistemi-m" aria-label="Sistemi"></nav>
+
+    <section class="contenuto">
+      <div class="filtri">
+        <label class="ricerca">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="#6f7074" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+          <input id="q" type="search" autocomplete="off" placeholder="Cerca per SKU, nome, EAN astuccio, ITF cartone…">
+        </label>
+        <div class="ms" data-menu="formati">
+          <button class="ms-btn" data-act="ms-toggle" data-menu="formati"><span class="lab">Formato</span><span class="val"></span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#6f7074" stroke-width="1.6"><path d="M3.5 5.5L7 9l3.5-3.5"/></svg></button>
+          <div class="ms-pan"></div>
+        </div>
+        <div class="ms" data-menu="tipologie">
+          <button class="ms-btn" data-act="ms-toggle" data-menu="tipologie"><span class="lab">Tipologia</span><span class="val"></span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#6f7074" stroke-width="1.6"><path d="M3.5 5.5L7 9l3.5-3.5"/></svg></button>
+          <div class="ms-pan"></div>
+        </div>
+      </div>
+
+      <div class="barra">
+        <div class="tit"><h2>Prodotti</h2><div class="risultati" id="risultati"></div></div>
+        <button class="sel-tutti-m" data-act="sel-tutti"><span class="cb" id="cb-tutti-m"></span><span>Seleziona tutti</span></button>
+        <div class="massivi">
+          <button class="btn" data-act="massivo-schede">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11"/></svg>
+            <span class="lbl-l">Schede selezionate</span><span class="lbl-c">Schede</span><span class="badge"></span>
+          </button>
+          <button class="btn primario" data-act="massivo-img">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11"/></svg>
+            <span class="lbl-l">Immagini HQ selezionate</span><span class="lbl-c">Immagini HQ</span><span class="badge"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tabella">
+        <div class="tabella-inner">
+          <div class="intest">
+            <div class="h-cb"><button class="cb" id="cb-tutti" data-act="sel-tutti" aria-label="Seleziona tutti"></button></div>
+            <div class="h-foto">Foto</div>
+            <div>SKU</div>
+            <div>Nome</div>
+            <div>Sistema</div>
+            <div>Formato</div>
+            <div>Pz x cartone</div>
+            <div>EAN astuccio</div>
+            <div>EAN cartone</div>
+            <div>Pallettizzazione</div>
+            <div class="h-dl">Download</div>
+            <div></div>
+          </div>
+          <div id="lista"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="contatti-m" id="contatti-m"></div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* =====================================================================
+   CONFIGURAZIONE
+   ===================================================================== */
+const CONFIG = {
+  // Se valorizzato, i dati vengono caricati da questo JSON ({ "sistemi": [...], "prodotti": [...] })
+  // invece che dagli array SISTEMI / PRODOTTI qui sotto. Es. "dati/catalogo.json"
+  url_dati: "catalogo.json",
+  // true = se un file (PDF/immagine) non esiste, ne genera uno di esempio. Mettere false in produzione.
+  modalita_demo: false,
+  // "comoda" (righe 72 px) o "compatta" (righe 56 px). Sovrascrivibile con ?densita=compatta nell'URL.
+  densita: "comoda",
+  // Prodotto aperto all'avvio (null = nessuno)
+  sku_aperto_iniziale: null,
+  // Archivi ZIP già pronti (consigliato per il catalogo completo). Chiave = id sistema, "all" = catalogo intero.
+  // Se una chiave manca, lo zip viene creato nel browser scaricando i singoli file.
+  archivi_pronti: {"NESPRESSO_PLASTICA":"archivi/catalogo_nespresso.zip","NESPRESSO_PRO":"archivi/catalogo_nespresso_professional.zip"},
+  jszip_cdn: "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js",
+  testi: {
+    titolo: "Catalogo prodotti Italian Coffee",
+    disclaimer: "* Tutti i marchi citati appartengono ai rispettivi proprietari e sono usati solo per indicare la compatibilità dei prodotti.",
+    tutti_i_sistemi: "Tutti i sistemi",
+    contatti_titolo: "Serve aiuto? Contattaci"
+  },
+  contatti: {
+    email: "italiancoffee@actimail.it",
+    telefono: "049 8591750", telefono_link: "tel:+390498591750",
+    whatsapp: "375 743 3911", whatsapp_link: "https://wa.me/393757433911"
+  }
+};
+
+const TIPOLOGIE = { caffe: "Caffè", solubile: "Solubile", accessorio: "Accessorio", macchina: "Macchina caffè" };
+
+/* =====================================================================
+   DATI DI ESEMPIO — sostituire con i dati reali (vedi documentazione)
+   ===================================================================== */
+const SISTEMI = [];
+
+const PRODOTTI = [];
+/* ===================== FINE DATI ===================== */
+
+
+/* =====================================================================
+   APPLICAZIONE
+   ===================================================================== */
+(function () {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const vuoto = v => v === null || v === undefined || v === "";
+  const numero = v => { if (vuoto(v)) return null; const n = typeof v === "number" ? v : parseFloat(String(v).replace(",", ".")); return isNaN(n) ? null : n; };
+  const fmt = (v, d) => Number(v).toLocaleString("it-IT", { maximumFractionDigits: d });
+  const g = v => fmt(v, 2) + " g";
+  const oz = v => fmt(v, 2) + " oz";
+  const kg = v => fmt(v, 1) + " kg";
+  const OZ = 28.3495;
+  const T = "—";
+
+  const S = { sistema: "all", q: "", formati: [], tipologie: [], menu: null, sel: new Set(), aperti: new Set(), stato: "pronto", occupato: false };
+  let sistemi = [], prodotti = [];
+
+  /* ---------- normalizzazione dati ---------- */
+  function normalizza(p) {
+    const imm = Array.isArray(p.url_immagini) ? p.url_immagini : vuoto(p.url_immagini) ? [] : String(p.url_immagini).split(/[\n|,;]+/);
+    const q = {
+      ...p,
+      peso_netto_g: numero(p.peso_netto_g),
+      peso_netto_oz: numero(p.peso_netto_oz),
+      confezioni_per_cartone: numero(p.confezioni_per_cartone),
+      cartoni_per_pallet: numero(p.cartoni_per_pallet),
+      peso_netto_cartone_g: numero(p.peso_netto_cartone_g),
+      peso_lordo_astuccio_g: numero(p.peso_lordo_astuccio_g),
+      peso_lordo_cartone_g: numero(p.peso_lordo_cartone_g),
+      peso_lordo_pallet_kg: numero(p.peso_lordo_pallet_kg),
+      url_immagini: imm.map(s => s.trim()).filter(Boolean)
+    };
+    if (q.peso_netto_oz === null && q.peso_netto_g !== null) q.peso_netto_oz = Math.round(q.peso_netto_g / OZ * 100) / 100;
+    return q;
+  }
+
+  /* ---------- utilità ---------- */
+  const sistemaDi = id => sistemi.find(s => s.id === id);
+  const nomeSistema = (id, ast) => { if (id === "all") return CONFIG.testi.tutti_i_sistemi; const s = sistemaDi(id); return s ? s.nome + (ast && s.marchio ? "*" : "") : id; };
+  const contaSistema = id => id === "all" ? prodotti.length : prodotti.filter(p => p.sistema === id).length;
+  const etichettaTipologia = t => TIPOLOGIE[t] || t || T;
+  const unitaConf = n => n === 1 ? "pz" : "conf.";
+  const slug = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+  const estensione = (u, def) => (String(u).split(/[?#]/)[0].match(/\.([a-z0-9]{2,5})$/i) || [])[1]?.toLowerCase() || def;
+  const nomiImmagini = p => p.url_immagini.map((u, i) => `${p.sku}_${String(i + 1).padStart(2, "0")}.${estensione(u, "jpg")}`);
+  const ordinaFormato = (a, b) => { const na = parseFloat(a), nb = parseFloat(b); const ca = /capsul|ciald/i.test(a), cb = /capsul|ciald/i.test(b); if (ca !== cb) return ca ? -1 : 1; if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb; return a.localeCompare(b, "it"); };
+
+  function filtrati() {
+    const q = S.q.trim().toLowerCase();
+    return prodotti.filter(p => (S.sistema === "all" || p.sistema === S.sistema)
+      && (!S.formati.length || S.formati.includes(p.formato))
+      && (!S.tipologie.length || S.tipologie.includes(p.tipologia))
+      && (!q || [p.sku, p.nome, p.ean_astuccio, p.itf_cartone].some(v => String(v ?? "").toLowerCase().includes(q))));
+  }
+
+  /* ---------- toast ---------- */
+  let tTimer;
+  function toast(msg, fisso) {
+    const el = $("#toast"); el.textContent = msg; el.hidden = false;
+    el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
+    clearTimeout(tTimer); if (!fisso) tTimer = setTimeout(() => { el.hidden = true; }, 2400);
+  }
+
+  /* ---------- render ---------- */
+  function renderStatico() {
+    $("#titolo").textContent = CONFIG.testi.titolo;
+    $("#disclaimer").textContent = CONFIG.testi.disclaimer;
+    const c = CONFIG.contatti;
+    const html = `<div class="eyebrow">${esc(CONFIG.testi.contatti_titolo)}</div>
+      <a class="contatto" href="mailto:${esc(c.email)}"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#d90a16" stroke-width="1.5"><rect x="2" y="3.5" width="14" height="11" rx="2"/><path d="M2.5 5l6.5 5 6.5-5"/></svg><span class="t"><b>Email</b><small>${esc(c.email)}</small></span></a>
+      <a class="contatto" href="${esc(c.telefono_link)}"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#d90a16" stroke-width="1.5"><rect x="5" y="1.5" width="8" height="15" rx="2"/><path d="M8 13.5h2"/></svg><span class="t"><b>Telefono</b><small>${esc(c.telefono)}</small></span></a>
+      <a class="contatto" href="${esc(c.whatsapp_link)}" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#d90a16" stroke-width="1.5"><path d="M9 2a7 7 0 0 0-6 10.6L2 16l3.5-1A7 7 0 1 0 9 2z"/></svg><span class="t"><b>WhatsApp</b><small>${esc(c.whatsapp)}</small></span></a>`;
+    $("#contatti").innerHTML = html; $("#contatti-m").innerHTML = html;
+  }
+
+  function renderSistemi() {
+    const voci = [{ id: "all" }, ...sistemi.filter(s => contaSistema(s.id) > 0)];
+    $("#sistemi").innerHTML = voci.map(s => `<button class="sistema${s.id === S.sistema ? " attivo" : ""}" data-act="sistema" data-id="${esc(s.id)}"><span class="punto"></span><span class="nome-s">${esc(nomeSistema(s.id, true))}</span><span class="conteggio">${contaSistema(s.id)}</span></button>`).join("");
+    $("#sistemi-m").innerHTML = voci.map(s => `<button class="chip${s.id === S.sistema ? " attivo" : ""}" data-act="sistema" data-id="${esc(s.id)}">${esc(nomeSistema(s.id, true))}<span class="conteggio">${contaSistema(s.id)}</span></button>`).join("");
+    $("#lbl-tutto").textContent = S.sistema === "all" ? "Scarica tutto il catalogo" : "Scarica tutto il sistema";
+  }
+
+  function opzioniMenu(key) {
+    const base = S.sistema === "all" ? prodotti : prodotti.filter(p => p.sistema === S.sistema);
+    if (key === "formati") return [...new Set(base.map(p => p.formato).filter(Boolean))].sort(ordinaFormato).map(v => ({ v, l: v, s: (v.match(/^(\d+)\s*(?:capsule|cialde)$/i) || [])[1] || v }));
+    const presenti = [...new Set(base.map(p => p.tipologia).filter(Boolean))];
+    return [...Object.keys(TIPOLOGIE).filter(k => presenti.includes(k)), ...presenti.filter(k => !TIPOLOGIE[k])].map(v => ({ v, l: etichettaTipologia(v) }));
+  }
+
+  function renderFiltri() {
+    for (const key of ["formati", "tipologie"]) {
+      const box = $(`.ms[data-menu="${key}"]`), cur = S[key], opts = opzioniMenu(key);
+      box.classList.toggle("aperto", S.menu === key);
+      box.querySelector(".val").textContent = cur.length ? opts.filter(o => cur.includes(o.v)).map(o => o.s || o.l).join(", ") : (key === "formati" ? "Tutti" : "Tutte");
+      box.querySelector(".ms-pan").innerHTML = opts.map(o => { const on = cur.includes(o.v); return `<button class="ms-opt" data-act="ms-opt" data-menu="${key}" data-v="${esc(o.v)}"><span class="cb${on ? " on" : ""}">${on ? "✓" : ""}</span><span>${esc(o.l)}</span></button>`; }).join("")
+        + `<button class="ms-azzera" data-act="ms-azzera" data-menu="${key}">Azzera</button>`;
+    }
+  }
+
+  function renderBarra(righe) {
+    const n = S.sel.size;
+    $("#risultati").textContent = S.stato === "caricamento" ? "Caricamento…" : `${righe.length} risultati${n ? ` · ${n} selezionati` : ""}`;
+    $$(".massivi .badge").forEach(b => b.textContent = `(${n})`);
+    document.body.classList.toggle("con-selezione", n > 0);
+    const tutti = righe.length > 0 && righe.every(p => S.sel.has(p.sku)), alcuni = righe.some(p => S.sel.has(p.sku));
+    for (const el of [$("#cb-tutti"), $("#cb-tutti-m")]) { el.className = "cb" + (tutti ? " on" : alcuni ? " parz" : ""); el.textContent = tutti ? "✓" : alcuni ? "–" : ""; }
+  }
+
+
+  function riga(p) {
+    const sel = S.sel.has(p.sku), aperta = S.aperti.has(p.sku);
+    const foto = p.url_miniatura ? `<img src="${esc(p.url_miniatura)}" alt="" loading="lazy" onerror="this.remove()">` : "";
+    const cpc = p.confezioni_per_cartone;
+    return `<div class="riga${sel ? " sel" : ""}${aperta ? " aperta" : ""}" data-sku="${esc(p.sku)}">
+  <div class="riga-grid">
+    <div class="c-head">
+      <div class="c-cb"><button class="cb${sel ? " on" : ""}" data-act="sel" aria-label="Seleziona ${esc(p.sku)}">${sel ? "✓" : ""}</button></div>
+      <div class="c-foto"><div class="foto"><span>IMG</span>${foto}</div></div>
+      <div class="c-id"><div class="c-sku"><div class="sku">${esc(p.sku)}</div>${vuoto(p.revisione) ? "" : `<span class="rev">Rev. ${esc(p.revisione)}${vuoto(p.data_revisione) ? "" : " · " + esc(p.data_revisione)}</span>`}</div><div class="c-nome"><span class="nome">${esc(p.nome)}</span><span class="categoria">${esc(etichettaTipologia(p.tipologia))}</span></div></div>
+    </div>
+    <div class="c-facts">
+      <div class="c" data-l="Sistema">${esc(nomeSistema(p.sistema, true))}</div>
+      <div class="c" data-l="Formato">${esc(p.formato || T)}</div>
+      <div class="c" data-l="Pz x cartone">${cpc !== null ? `${cpc} ${unitaConf(cpc)}` : T}</div>
+      <div class="c codice${p.ean_astuccio ? "" : " vuoto"}" data-l="EAN astuccio">${esc(p.ean_astuccio || T)}</div>
+      <div class="c codice${p.itf_cartone ? "" : " vuoto"}" data-l="EAN cartone">${esc(p.itf_cartone || T)}</div>
+      <div class="c logi" data-l="Pallettizzazione"><span>${p.cartoni_per_pallet !== null ? `${p.cartoni_per_pallet} cartoni` : T}</span><span class="sub">${p.ct_per_strato && p.strati ? `${esc(p.ct_per_strato)} × ${esc(p.strati)} strati` : ""}</span></div>
+    </div>
+    <div class="c-azioni">
+      <button class="btn-sm" data-act="pdf"${p.url_scheda_pdf ? "" : ' disabled title="Scheda non disponibile"'}>Scheda PDF</button>
+      <button class="btn-sm" data-act="img"${p.url_immagini.length ? "" : ' disabled title="Immagini non disponibili"'}>Immagini HQ</button>
+    </div>
+    <div class="c-exp"><button class="exp" data-act="apri" title="Dettagli" aria-expanded="${aperta}"><span class="lab-m">${aperta ? "Chiudi dettagli" : "Dettagli"}</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 5.5L7 9l3.5-3.5"/></svg></button></div>
+  </div>
+  ${aperta ? dettaglio(p) : ""}
+</div>`;
+  }
+
+  function dettaglio(p) {
+    const cpc = p.confezioni_per_cartone, d = v => vuoto(v) ? T : esc(v);
+    // profilo solo dei caffè: intensità da 1 a 10 e miscela
+    const int = numero(p.intensita), ar = numero(p.arabica), ro = numero(p.robusta);
+    const miscela = [ar ? `Arabica ${ar}%` : "", ro ? `Robusta ${ro}%` : ""].filter(Boolean).join(" · ");
+    const conProfilo = p.tipologia === "caffe" && (int || miscela);
+    const barre = n => `<div class="barre">${Array.from({ length: 10 }, (_, k) => `<i${k < n ? ' class="on"' : ""}></i>`).join("")}</div>`;
+    const gOz = v => v === null ? T : `${g(v)} · ${oz(v / OZ)}`;
+    const pack = [
+      ["Contenuto", d(p.formato), cpc !== null ? `${cpc} ${unitaConf(cpc)}` : T, p.cartoni_per_pallet !== null ? `${p.cartoni_per_pallet} cartoni` : T],
+      ["Peso netto", gOz(p.peso_netto_g), gOz(p.peso_netto_cartone_g), T],
+      ["Peso lordo", p.peso_lordo_astuccio_g !== null ? g(p.peso_lordo_astuccio_g) : T, p.peso_lordo_cartone_g !== null ? g(p.peso_lordo_cartone_g) : T, p.peso_lordo_pallet_kg !== null ? kg(p.peso_lordo_pallet_kg) : T],
+      ["Misure", d(p.misure_astuccio), d(p.misure_cartone), d(p.misure_pallet)],
+      ["Codice", d(p.ean_astuccio), d(p.itf_cartone), T]
+    ];
+    const cons = [["Shelf life", p.shelf_life], ["Allergeni", p.allergeni], ["Conservazione", p.conservazione], ["Lotto", p.lotto]];
+    return `<div class="dett${conProfilo ? " con-profilo" : ""}">
+    ${conProfilo ? `<div class="dcol"><div class="eyebrow">Profilo</div><div class="profilo">
+      ${int ? `<div class="riga-k"><span class="k">Intensità</span><span class="forte">${int}/10</span></div>${barre(int)}` : ""}
+      ${miscela ? `<div class="riga-k${int ? " sep" : ""}"><span class="k">Miscela</span><span>${miscela}</span></div>` : ""}
+    </div></div>` : ""}
+    <div class="dcol s2"><div class="eyebrow">Imballaggio e pallettizzazione</div>
+      <div class="pack-wrap"><div class="pack"><div class="th"></div><div class="th">Confezione</div><div class="th">Cartone</div><div class="th">Pallet</div>
+        ${pack.map(r => `<div class="k">${r[0]}</div><div>${r[1]}</div><div>${r[2]}</div><div>${r[3]}</div>`).join("")}
+      </div></div>
+      <div class="mat">${d(p.materiali)}</div>
+    </div>
+    <div class="dcol"><div class="eyebrow">Conservazione</div>
+      ${cons.map(([k, v]) => `<div class="cons"><span class="k">${k}</span><span class="v">${d(v)}</span></div>`).join("")}
+    </div>
+  </div>`;
+  }
+
+  function scheletro() {
+    const b = w => `<span class="sk" style="width:${w}"></span>`;
+    return Array.from({ length: 8 }, () => `<div class="riga scheletro"><div class="riga-grid">
+      <div class="c-head"><div class="c-cb"><span class="cb" style="border-color:#ececee"></span></div><div class="c-foto"><div class="foto"></div></div><div class="c-id"><div class="c-sku">${b("70%")}</div><div class="c-nome">${b("50%")}</div></div></div>
+      <div class="c-facts">${["60%", "50%", "50%", "80%", "80%", "70%"].map(w => `<div class="c">${b(w)}</div>`).join("")}</div>
+      <div class="c-azioni">${b("100%")}</div><div class="c-exp"></div></div></div>`).join("");
+  }
+
+  function renderLista() {
+    const righe = filtrati();
+    const lista = $("#lista");
+    if (S.stato === "caricamento") lista.innerHTML = scheletro();
+    else if (S.stato === "errore") lista.innerHTML = `<div class="stato-vuoto">Impossibile caricare il catalogo. Riprova tra qualche minuto o contattaci.</div>`;
+    else if (!righe.length) lista.innerHTML = `<div class="stato-vuoto">Nessun prodotto corrisponde ai filtri. <a href="#" data-act="azzera-filtri">Azzera filtri</a></div>`;
+    else lista.innerHTML = righe.map(riga).join("");
+    renderBarra(S.stato === "pronto" ? righe : []);
+  }
+
+  function render() { renderSistemi(); renderFiltri(); renderLista(); }
+
+  /* ---------- download ---------- */
+  function salvaBlob(blob, nome) {
+    const u = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = u; a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 4000);
+  }
+
+  function pdfDemo(sku, nome) {
+    const t = s => String(s).replace(/[^\x20-\x7e]/g, "").replace(/([()\\])/g, "\\$1");
+    const testo = `BT /F1 22 Tf 60 760 Td (Scheda tecnica di esempio) Tj /F1 14 Tf 0 -34 Td (${t(sku)} - ${t(nome)}) Tj 0 -22 Td (File generato in modalita demo.) Tj ET`;
+    const obj = ["<< /Type /Catalog /Pages 2 0 R >>", "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>",
+      `<< /Length ${testo.length} >>\nstream\n${testo}\nendstream`, "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"];
+    let out = "%PDF-1.4\n"; const off = [];
+    obj.forEach((o, i) => { off.push(out.length); out += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+    const x = out.length;
+    out += `xref\n0 ${obj.length + 1}\n0000000000 65535 f \n` + off.map(o => String(o).padStart(10, "0") + " 00000 n \n").join("") + `trailer\n<< /Size ${obj.length + 1} /Root 1 0 R >>\nstartxref\n${x}\n%%EOF`;
+    return new Blob([out], { type: "application/pdf" });
+  }
+
+  function immagineDemo(nome) {
+    return new Promise(res => {
+      const c = document.createElement("canvas"); c.width = c.height = 1200; const x = c.getContext("2d");
+      x.fillStyle = "#f5f5f6"; x.fillRect(0, 0, 1200, 1200); x.strokeStyle = "#e6e6e8"; x.lineWidth = 24;
+      for (let i = -1200; i < 1200; i += 60) { x.beginPath(); x.moveTo(i, 1200); x.lineTo(i + 1200, 0); x.stroke(); }
+      x.fillStyle = "#222224"; x.font = "600 44px Figtree, sans-serif"; x.textAlign = "center"; x.fillText(nome, 600, 590);
+      x.fillStyle = "#8a8b8f"; x.font = "28px Figtree, sans-serif"; x.fillText("Immagine di esempio", 600, 640);
+      c.toBlob(res, "image/jpeg", .85);
+    });
+  }
+
+  async function prendi(url, nome, p) {
+    try { const r = await fetch(url); if (!r.ok) throw new Error(r.status); return await r.blob(); }
+    catch (e) {
+      if (!CONFIG.modalita_demo) throw e;
+      return /\.pdf$/i.test(nome) ? pdfDemo(p.sku, p.nome) : immagineDemo(nome);
+    }
+  }
+
+  let jszip;
+  const caricaJSZip = () => jszip || (jszip = new Promise((ok, ko) => {
+    if (window.JSZip) return ok(window.JSZip);
+    const s = document.createElement("script"); s.src = CONFIG.jszip_cdn; s.onload = () => ok(window.JSZip); s.onerror = () => { jszip = null; ko(new Error("JSZip")); }; document.head.appendChild(s);
+  }));
+
+  async function creaZip(nomeZip, voci, note) {
+    const JSZip = await caricaJSZip(); const zip = new JSZip(); const mancanti = [...(note || [])];
+    let fatti = 0; const coda = voci.slice();
+    const lavora = async () => { while (coda.length) { const v = coda.shift(); try { zip.file(v.percorso, await prendi(v.url, v.percorso, v.p)); } catch (e) { mancanti.push(`${v.percorso} — non trovato (${v.url})`); } fatti++; toast(`Preparazione ${nomeZip}: ${fatti}/${voci.length}`, true); } };
+    await Promise.all(Array.from({ length: Math.min(4, voci.length || 1) }, lavora));
+    if (mancanti.length) zip.file("FILE_MANCANTI.txt", "File non inclusi in questo archivio:\n\n" + mancanti.join("\n"));
+    toast(`Compressione ${nomeZip}…`, true);
+    salvaBlob(await zip.generateAsync({ type: "blob" }), nomeZip);
+    toast(mancanti.length ? `${nomeZip} scaricato · ${mancanti.length} file mancanti (vedi FILE_MANCANTI.txt)` : `${nomeZip} scaricato`);
+  }
+
+  const vociSchede = (lista, cartella) => lista.filter(p => p.url_scheda_pdf).map(p => ({ url: p.url_scheda_pdf, percorso: `${cartella}${p.sku}.pdf`, p }));
+  const vociImmagini = (lista, cartella) => lista.flatMap(p => nomiImmagini(p).map((n, i) => ({ url: p.url_immagini[i], percorso: `${cartella}${p.sku}/${n}`, p })));
+
+  async function esegui(fn) {
+    if (S.occupato) { toast("Attendi la fine del download in corso"); return; }
+    S.occupato = true;
+    try { await fn(); } catch (e) { console.error(e); toast("Download non riuscito. Riprova o contattaci."); }
+    finally { S.occupato = false; }
+  }
+
+  const azioniDownload = {
+    pdf: p => esegui(async () => { salvaBlob(await prendi(p.url_scheda_pdf, `${p.sku}.pdf`, p), `${p.sku}.pdf`); toast(`Scheda tecnica ${p.sku}.pdf scaricata`); }),
+    img: p => esegui(async () => {
+      const nomi = nomiImmagini(p);
+      if (nomi.length === 1) { salvaBlob(await prendi(p.url_immagini[0], nomi[0], p), nomi[0]); toast(`Immagine HQ ${nomi[0]} scaricata`); }
+      else await creaZip(`${p.sku}_immagini_HQ.zip`, nomi.map((n, i) => ({ url: p.url_immagini[i], percorso: n, p })));
+    }),
+    "massivo-schede": () => {
+      const lista = prodotti.filter(p => S.sel.has(p.sku)); if (!lista.length) return toast("Seleziona almeno un prodotto");
+      esegui(() => creaZip(`schede_tecniche_${lista.length}_prodotti.zip`, vociSchede(lista, ""), lista.filter(p => !p.url_scheda_pdf).map(p => `${p.sku} — scheda tecnica non disponibile`)));
+    },
+    "massivo-img": () => {
+      const lista = prodotti.filter(p => S.sel.has(p.sku)); if (!lista.length) return toast("Seleziona almeno un prodotto");
+      esegui(() => creaZip(`immagini_HQ_${lista.length}_prodotti.zip`, vociImmagini(lista, ""), lista.filter(p => !p.url_immagini.length).map(p => `${p.sku} — immagini non disponibili`)));
+    },
+    tutto: () => esegui(async () => {
+      const id = S.sistema, pronto = CONFIG.archivi_pronti && CONFIG.archivi_pronti[id];
+      const nomeZip = id === "all" ? "catalogo_italian_coffee.zip" : `catalogo_${slug(nomeSistema(id, false))}.zip`;
+      toast(`Download archivio completo ${nomeSistema(id, false)} avviato`, true);
+      if (pronto) { const r = await fetch(pronto); if (!r.ok) throw new Error(r.status); salvaBlob(await r.blob(), pronto.split("/").pop()); toast(`${pronto.split("/").pop()} scaricato`); return; }
+      const lista = id === "all" ? prodotti : prodotti.filter(p => p.sistema === id);
+      await creaZip(nomeZip, [...vociSchede(lista, "schede/"), ...vociImmagini(lista, "immagini/")]);
+    })
+  };
+
+  /* ---------- eventi ---------- */
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-act]"); if (!el) return;
+    const act = el.dataset.act, rigaEl = el.closest(".riga"), sku = rigaEl && rigaEl.dataset.sku, p = sku && prodotti.find(x => x.sku === sku);
+    switch (act) {
+      case "sistema": S.sistema = el.dataset.id; S.formati = []; S.tipologie = []; S.sel.clear(); S.aperti.clear(); S.menu = null; render(); break;
+      case "ms-toggle": S.menu = S.menu === el.dataset.menu ? null : el.dataset.menu; renderFiltri(); break;
+      case "ms-opt": { const k = el.dataset.menu, v = el.dataset.v; S[k] = S[k].includes(v) ? S[k].filter(x => x !== v) : [...S[k], v]; renderFiltri(); renderLista(); break; }
+      case "ms-azzera": S[el.dataset.menu] = []; renderFiltri(); renderLista(); break;
+      case "sel": S.sel.has(sku) ? S.sel.delete(sku) : S.sel.add(sku); renderLista(); break;
+      case "sel-tutti": { const r = filtrati(), tutti = r.length && r.every(x => S.sel.has(x.sku)); r.forEach(x => tutti ? S.sel.delete(x.sku) : S.sel.add(x.sku)); renderLista(); break; }
+      case "apri": S.aperti.has(sku) ? S.aperti.delete(sku) : S.aperti.add(sku); renderLista(); break;
+      case "azzera-filtri": e.preventDefault(); S.q = ""; $("#q").value = ""; S.formati = []; S.tipologie = []; renderFiltri(); renderLista(); break;
+      default: if (azioniDownload[act]) azioniDownload[act](p);
+    }
+  });
+  document.addEventListener("mousedown", e => { if (S.menu && !e.target.closest(".ms")) { S.menu = null; renderFiltri(); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && S.menu) { S.menu = null; renderFiltri(); } });
+  $("#q").addEventListener("input", e => { S.q = e.target.value; renderLista(); });
+
+  /* ---------- avvio ---------- */
+  const par = new URLSearchParams(location.search);
+  if ((par.get("densita") || CONFIG.densita) === "compatta") document.body.classList.add("compatta");
+  renderStatico();
+
+  function avvia(dati) {
+    sistemi = (dati.sistemi || []).slice().sort((a, b) => (a.ordine ?? 0) - (b.ordine ?? 0));
+    prodotti = (dati.prodotti || []).map(normalizza);
+    if (CONFIG.sku_aperto_iniziale && prodotti.some(p => p.sku === CONFIG.sku_aperto_iniziale)) S.aperti.add(CONFIG.sku_aperto_iniziale);
+    S.stato = "pronto"; render();
+  }
+
+  if (par.get("stato") === "caricamento") { S.stato = "caricamento"; render(); }
+  else if (CONFIG.url_dati) {
+    S.stato = "caricamento"; render();
+    fetch(CONFIG.url_dati).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(avvia)
+      .catch(err => { console.error(err); S.stato = "errore"; render(); });
+  } else avvia({ sistemi: SISTEMI, prodotti: PRODOTTI });
+})();
+</script>
+</body>
+</html>
